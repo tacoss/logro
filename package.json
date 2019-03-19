@@ -20,5 +20,8 @@
     "lodash": "^4.17.11",
     "uuid": "^3.3.2",
     "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "std-mocks": "^1.0.1"
   }
 }

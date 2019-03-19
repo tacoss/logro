@@ -1,0 +1,24 @@
+{
+  "name": "logro",
+  "version": "0.0.1",
+  "description": "Handy logger impl.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "winston",
+    "logger",
+    "debug"
+  ],
+  "author": "Agave Lab <oss@agavelab.com> (https://agavelab.com/)",
+  "maintainers": [
+    "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
+  }
+}

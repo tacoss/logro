@@ -17,10 +17,7 @@
   "files": [
     "lib/*"
   ],
-  "author": "Agave Lab <oss@agavelab.com> (https://agavelab.com/)",
-  "maintainers": [
-    "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)"
-  ],
+  "author": "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)",
   "license": "MIT",
   "dependencies": {
     "bole": "^3.0.2",

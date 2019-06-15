@@ -1,3 +1,4 @@
+const { inspect } = require('util');
 const { Transform } = require('stream');
 const { format } = require('../lib/debug');
 
@@ -8,36 +9,41 @@ const color = process.argv.slice(2).indexOf('--no-color') === -1;
 
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
-    const text = Buffer.from(entry, enc).toString().trim();
+    const lines = Buffer.from(entry, enc).toString().trim().split('\n');
+    const buffer = [];
 
-    if (text.charAt() === '{' && text.charAt(text.length - 1) === '}') {
-      let payload;
+    lines.map(x => x.trim()).forEach(line => {
+      if (line.charAt() === '{' && line.charAt(line.length - 1) === '}') {
+        let payload;
 
-      try {
-        payload = JSON.parse(text);
-      } catch (e) {
-        callback(null, `${text}\n`);
-        return;
+        try {
+          payload = JSON.parse(line);
+        } catch (e) {
+          buffer.push(`${line}\n`);
+          return;
+        }
+
+        const time = payload.time || payload.ts;
+        const name = payload.name || payload.ns;
+        const level = payload.level;
+
+        delete payload.level;
+        delete payload.time;
+        delete payload.name;
+        delete payload.ts;
+        delete payload.ns;
+
+        const label = level.toUpperCase();
+        const prefix = level ? (color ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
+
+        buffer.push(`${format(prefix, payload, time ? new Date(time) : null, {
+          showFulldate, showISODate, noColor: !color,
+        })}\n`);
+      } else if (!isQuiet) {
+        buffer.push(`${line}\n`);
       }
+    });
 
-      const time = payload.time || payload.ts;
-      const name = payload.name || payload.ns;
-      const level = payload.level;
-
-      delete payload.level;
-      delete payload.time;
-      delete payload.name;
-      delete payload.ts;
-      delete payload.ns;
-
-      const label = level.toUpperCase();
-      const prefix = level ? (color ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
-
-      callback(null, `${format(prefix, payload, time ? new Date(time) : null, {
-        showFulldate, showISODate, noColor: !color,
-      })}\n`);
-    } else {
-      callback(null, isQuiet ? '' : `${text}\n`);
-    }
+    callback(null, buffer.join(''));
   }
 })).pipe(process.stdout);

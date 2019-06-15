@@ -19,11 +19,8 @@ $ echo '{"foo":"bar","time":1560577967962}' | logrof
 However, `logro` messages are sent to the stderr:
 
 ```bash
-$ node test.js 2>&1 | logrof
-#  1:15:31  INFO main.js { hostname: 'dev.local',
-#   pid: 62263,
-#   evt: 'Just testing',
-#   data: null }
+$ node main.js 2>&1 | logrof
+#  1:22:37  INFO main.js { hostname: 'dev.local', pid: 62525, evt: 'Just testing' }
 ```
 
 > WIP

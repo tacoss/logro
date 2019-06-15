@@ -3,6 +3,9 @@
   "version": "0.0.9",
   "description": "Handy logger impl.",
   "main": "lib/index.js",
+  "bin": {
+    "logrof": "bin/cli"
+  },
   "scripts": {
     "test": "node test.js"
   },

@@ -20,12 +20,17 @@ io.restore();
 
 const { stdout, stderr } = io.flush();
 
-a.ok(stderr[0].includes('Error: EXCEPTION'), 'should print errors to stdout');
-a.ok(stdout[0].includes('"data":{}'), 'should skip forbidden fields');
-a.ok(stdout[1].includes('TWO -> FAILURE'), 'should log failures');
-a.ok(stdout[2].includes('EXCEPTION at Object'), 'should log exceptions');
+const out = stdout.join('');
+const err = stderr.join('');
 
-a.ok(stdout[3].includes('response -> OK'), 'should log legacy messages');
-a.ok(stdout[4].includes('App -> MESSAGE TEST'), 'should log legacy messages');
-a.ok(stdout[5].includes('INTERNAL_SERVER_ERROR'), 'should log legacy messages');
-a.ok(stdout[6].includes('UNKNOWN_ERROR'), 'should log legacy messages');
+a.ok(out === '', 'no messages should printed on stdout');
+
+a.ok(err.includes('Error: EXCEPTION'), 'should print errors to stdout');
+a.ok(err.includes('"data":{}'), 'should skip forbidden fields');
+a.ok(err.includes('TWO -> FAILURE'), 'should log failures');
+a.ok(err.includes('EXCEPTION at Object'), 'should log exceptions');
+
+a.ok(err.includes('response -> OK'), 'should log legacy messages');
+a.ok(err.includes('App -> MESSAGE TEST'), 'should log legacy messages');
+a.ok(err.includes('INTERNAL_SERVER_ERROR'), 'should log legacy messages');
+a.ok(err.includes('UNKNOWN_ERROR'), 'should log legacy messages');

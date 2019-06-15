@@ -9,7 +9,14 @@ process.stdin.pipe(new Transform({
     const text = Buffer.from(entry, enc).toString().trim();
 
     if (text.charAt() === '{' && text.charAt(text.length - 1) === '}') {
-      const payload = JSON.parse(text);
+      let payload;
+
+      try {
+        payload = JSON.parse(text);
+      } catch (e) {
+        callback(null, `${text}\n`);
+        return;
+      }
 
       const time = payload.time || payload.ts;
       const name = payload.name || payload.ns;

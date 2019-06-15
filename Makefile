@@ -1,11 +1,10 @@
 env ?= development
 flags ?=
-filter ?= .+?
 
 export REMOVE_LOG
 
 test:
-	@NODE_ENV=$(env) node tests/*.test.js $(filter) --no-color 2>&1 | bin/cli --no-color $(flags)
+	@NODE_ENV=$(env) node tests/*.test.js --no-color 2>&1 | bin/cli --no-color $(flags)
 
 run:
 	@echo "NODE_ENV=$(env)"

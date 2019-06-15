@@ -1,4 +1,3 @@
-const filter = process.argv.slice(2).filter(x => x.charAt() !== '-')[0];
 const debug = process.argv.indexOf('--debug') !== -1;
 
 const io = require('std-mocks');

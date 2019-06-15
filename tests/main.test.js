@@ -28,7 +28,23 @@ test('logro messages are sent to stderr', () => {
       ok(stderr.includes('"evt":"Hello World"'));
       ok(stderr.includes('"level":"info"'))
     }
+  }
+});
 
-    console.log(stderr);
+test('logro handles deprecated messages', () => {
+  const err = new Error('FAILURE');
+  const msg = 'Some error';
+  const data = { t: 42 };
+  const type = 'check';
+  const guid = [123];
+
+  log.message(msg, data, type, guid);
+  log.error(err, msg, data, guid);
+  log.warn(err, msg, guid);
+}, ({ stdout, stderr }) => {
+  if (process.env.REMOVE_LOG !== 'true') {
+    ok(stderr.includes('"evt":"Some error -> FAILURE"'));
+    ok(stderr.includes('"evt":"check -> Some error"'));
+    ok(stderr.includes('Error: FAILURE'));
   }
 });

@@ -21,11 +21,11 @@ process.stdin.pipe(new Transform({
       delete payload.ts;
       delete payload.ns;
 
-      const prefix = level ? `\u001b[4m${level.toUpperCase()}\u001b[24m ${name}` : name;
+      const prefix = level ? `\u001b[4m${level.toUpperCase()}\u001b[24m ${name || ''}`.trim() : name;
 
       callback(null, `${format(prefix, payload, time ? new Date(time) : null, { showFulldate, showISODate })}\n`);
     } else {
-      callback(null, text);
+      callback(null, `${text}\n`);
     }
   }
 })).pipe(process.stdout);

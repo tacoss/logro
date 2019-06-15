@@ -1,8 +1,9 @@
 const { Transform } = require('stream');
 const { format } = require('../lib/debug');
 
-const showFulldate = process.argv.slice(2).indexOf('--full') !== -1 || process.argv.slice(2).indexOf('-f') !== -1;
-const showISODate = process.argv.slice(2).indexOf('--iso') !== -1 || process.argv.slice(2).indexOf('-i') !== -1;
+const showFulldate = process.argv.slice(2).indexOf('--full') !== -1;
+const showISODate = process.argv.slice(2).indexOf('--iso') !== -1;
+const isQuiet = process.argv.slice(2).indexOf('--quiet') !== -1;
 
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
@@ -32,7 +33,7 @@ process.stdin.pipe(new Transform({
 
       callback(null, `${format(prefix, payload, time ? new Date(time) : null, { showFulldate, showISODate })}\n`);
     } else {
-      callback(null, `${text}\n`);
+      callback(null, isQuiet ? '' : `${text}\n`);
     }
   }
 })).pipe(process.stdout);

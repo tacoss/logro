@@ -2,14 +2,14 @@
 
 > Handy logger impl.
 
-Built on-top of `bole` to provide ready to use logging:
+Built on-top of [bole](https://www.npmjs.com/package/bole) to provide ready to use logging:
 
 ```js
 const log = require('logro').createLogger(__filename);
 log.info('Just testing');
 ```
 
-It also provides a simple formatter for the CLI:
+It also comes with simple formatter for the CLI:
 
 ```bash
 $ echo '{"foo":"bar","time":1560577967962}' | logrof
@@ -18,7 +18,7 @@ $ echo '{"foo":"bar","time":1560577967962}' | logrof
 
 ## How it works?
 
-`logro` messages are sent to the stderr:
+By design, `logro` messages are sent to the stderr:
 
 ```bash
 $ node main.js 2>&1 | logrof
@@ -27,22 +27,40 @@ $ node main.js 2>&1 | logrof
 
 Most methods receive a message and some data, otherwise an error with some data, etc.
 
-Standard methods (derived from `bole`):
+> Last argument is used as identity for the ongoing message, on all methods.
+
+Quiet methods (derived from `bole`):
 
 - `info(msg[, data[, guid]])` &mdash; Just info; hidden on production
 - `debug(msg[, data[, guid]])` &mdash; Debug info; shown during test only
 - `warn(msg[, error[, guid]])` &mdash; Relax warnings; hidden from stdout
 - `error(msg[, error[, guid]])` &mdash; Regular/relax errors; not critical, hidden
 
-> Last argument is used as identity for the ongoing message, on all methods.
+> If warn/error receives an instance of `Error`, a proper failure/exception will be raised, respectively.
 
-Advanced methods:
+Loud methods:
 
 - `failure(err[, type[, guid]])` &mdash; Real warnings!
 - `exception(err[, msg[, data[, guid]]])` &mdash; Fatal errors :bomb:
 
 > Both methods always print to the stdout during development to help.
 
+Disabled if one or more conditions are true:
+
+- `process.env.NODE_ENV === 'production'` &mdash; loud-hidden
+- `process.env.NODE_ENV === 'test'` &mdash; all-hidden, debug-only
+- `process.env.REMOVE_LOG === 'true'` &mdash; all-hidden, errors-only
+
+> When `REMOVE_LOG` is enabled, all logs are hidden except fatal ones; debug-logs are enabled if `process.env.DEBUG` is also enabled.
+
 ## Formatting
 
 The default output is JSON, always.
+
+> Just pipe-in your logs to `logrof` in order to give them some format, it will skip non JSON objects from the stream.
+
+Options:
+
+- `--iso` &mdash; Convert as `ts.toISOString()`
+- `--full` &mdash; Convert as `ts.toLocaleString()`
+- `--quiet` &mdash; Non JSON objects are not longer printed

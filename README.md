@@ -55,12 +55,15 @@ Disabled if one or more conditions are true:
 
 ## Formatting
 
-The default output is JSON, always.
+Pipe your logs to `logrof` in order to give them some format, it will skip non JSON objects from the stream.
 
-> Just pipe-in your logs to `logrof` in order to give them some format, it will skip non JSON objects from the stream.
+Recognized fields are: `ts`, `time`, `ns`, `name` and `level`.
 
 Options:
 
-- `--iso` &mdash; Convert as `ts.toISOString()`
-- `--full` &mdash; Convert as `ts.toLocaleString()`
+- `--iso` &mdash; Format parsed date with `toISOString()`
+- `--full` &mdash; Format parsed date with `toLocaleString()`
 - `--quiet` &mdash; Non JSON objects are not longer printed
+- `--no-color` &mdash; Disable colors on formatting from output
+
+> Otherwise, the default output is JSON, always.

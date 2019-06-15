@@ -4,6 +4,7 @@ const { format } = require('../lib/debug');
 const showFulldate = process.argv.slice(2).indexOf('--full') !== -1;
 const showISODate = process.argv.slice(2).indexOf('--iso') !== -1;
 const isQuiet = process.argv.slice(2).indexOf('--quiet') !== -1;
+const color = process.argv.slice(2).indexOf('--no-color') === -1;
 
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
@@ -29,9 +30,12 @@ process.stdin.pipe(new Transform({
       delete payload.ts;
       delete payload.ns;
 
-      const prefix = level ? `\u001b[4m${level.toUpperCase()}\u001b[24m ${name || ''}`.trim() : name;
+      const label = level.toUpperCase();
+      const prefix = level ? (color ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
 
-      callback(null, `${format(prefix, payload, time ? new Date(time) : null, { showFulldate, showISODate })}\n`);
+      callback(null, `${format(prefix, payload, time ? new Date(time) : null, {
+        showFulldate, showISODate, noColor: !color,
+      })}\n`);
     } else {
       callback(null, isQuiet ? '' : `${text}\n`);
     }

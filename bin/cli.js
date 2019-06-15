@@ -2,10 +2,8 @@ const { inspect } = require('util');
 const { Transform } = require('stream');
 const { format } = require('../lib/debug');
 
-const showFulldate = process.argv.slice(2).indexOf('--full') !== -1;
-const showISODate = process.argv.slice(2).indexOf('--iso') !== -1;
-const isQuiet = process.argv.slice(2).indexOf('--quiet') !== -1;
-const color = process.argv.slice(2).indexOf('--no-color') === -1;
+const isQuiet = process.argv.indexOf('--quiet') !== -1;
+const noColor = process.argv.indexOf('--no-color') !== -1;
 
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
@@ -34,11 +32,9 @@ process.stdin.pipe(new Transform({
         delete payload.ns;
 
         const label = level.toUpperCase();
-        const prefix = level ? (color ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
+        const prefix = level ? (!noColor ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
 
-        buffer.push(`${format(prefix, payload, time ? new Date(time) : null, {
-          showFulldate, showISODate, noColor: !color,
-        })}\n`);
+        buffer.push(`${format(prefix, payload, time ? new Date(time) : null)}\n`);
       } else if (!isQuiet) {
         buffer.push(`${line}\n`);
       }

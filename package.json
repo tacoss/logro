@@ -7,7 +7,7 @@
     "logrof": "bin/cli"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "NODE_ENV=test node tests/*.test.js"
   },
   "keywords": [
     "winston",

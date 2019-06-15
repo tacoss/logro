@@ -11,15 +11,18 @@
     "logger",
     "debug"
   ],
+  "files": [
+    "lib/*"
+  ],
   "author": "Agave Lab <oss@agavelab.com> (https://agavelab.com/)",
   "maintainers": [
     "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)"
   ],
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.11",
-    "uuid": "^3.3.2",
-    "winston": "^3.2.1"
+    "bole": "^3.0.2",
+    "rfdc": "^1.1.4",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "std-mocks": "^1.0.1"

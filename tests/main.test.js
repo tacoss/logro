@@ -31,7 +31,7 @@ test('logro messages are sent to stderr', () => {
   }
 });
 
-test('logro handles deprecated messages', () => {
+test('logro handles deprecated messages and levels', () => {
   const err = new Error('FAILURE');
   const msg = 'Some error';
   const data = { t: 42 };
@@ -43,8 +43,14 @@ test('logro handles deprecated messages', () => {
   log.warn(err, msg, guid);
 }, ({ stdout, stderr }) => {
   if (process.env.REMOVE_LOG !== 'true') {
-    ok(stderr.includes('"evt":"Some error -> FAILURE"'));
-    ok(stderr.includes('"evt":"check -> Some error"'));
-    ok(stderr.includes('Error: FAILURE'));
+    ok(stderr.includes('"evt":"Some error :: FAILURE"'));
+
+    if (process.env.NODE_ENV !== 'production') {
+      ok(stderr.includes('"evt":"check :: Some error"'));
+
+      if (process.env.NODE_ENV !== 'test') {
+        ok(stderr.includes('Error: FAILURE'));
+      }
+    }
   }
 });

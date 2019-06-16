@@ -43,15 +43,13 @@ Loud methods:
 - `failure(err[, type[, guid]])` &mdash; Real warnings!
 - `exception(err[, msg[, data[, guid]]])` &mdash; Fatal errors :bomb:
 
-> Both methods always print to the stdout during development to help.
+> Both methods always print to the stdout during development to help, the default level is `info`.
 
 Disabled if one or more conditions are true:
 
-- `process.env.NODE_ENV === 'production'` &mdash; loud-hidden
-- `process.env.NODE_ENV === 'test'` &mdash; all-hidden, debug-only
-- `process.env.REMOVE_LOG === 'true'` &mdash; all-hidden, errors-only
-
-> When `REMOVE_LOG` is enabled, all logs are hidden except fatal ones; debug-logs are enabled if `process.env.DEBUG` is also enabled.
+- `process.env.NODE_ENV === 'production'` &mdash; set `error` level
+- `process.env.NODE_ENV === 'test'` &mdash; set `debug` level
+- `process.env.REMOVE_LOG === 'true'` &mdash; disable all logs
 
 ## Formatting
 

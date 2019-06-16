@@ -20,8 +20,6 @@ ci:
 all:
 	@make -s ci
 	@make -s ci REMOVE_LOG=true
-	@make -s ci flags=--iso
-	@make -s ci flags=--full
 	@make -s ci flags=--quiet
 	@make -s ci flags=--no-color
 

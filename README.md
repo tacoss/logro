@@ -59,8 +59,6 @@ Recognized fields are: `ts`, `time`, `ns`, `name` and `level`.
 
 Options:
 
-- `--iso` &mdash; Format parsed date with `toISOString()`
-- `--full` &mdash; Format parsed date with `toLocaleString()`
 - `--quiet` &mdash; Non JSON objects are not longer printed
 - `--no-color` &mdash; Disable colors on formatting from output
 

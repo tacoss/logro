@@ -18,7 +18,8 @@
     "debug"
   ],
   "files": [
-    "lib/*"
+    "lib/*",
+    "bin/*"
   ],
   "author": "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)",
   "license": "MIT",

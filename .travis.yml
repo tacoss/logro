@@ -6,8 +6,10 @@ node_js:
   - 10
   - 11
 before_script:
-  - 'mkdir coverage'
+  - mkdir coverage
 script:
-  - 'make ci'
+  - make check output=lcov
+after_success:
+  - npm run codecov
 notifications:
   email: false

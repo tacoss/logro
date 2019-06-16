@@ -38,6 +38,7 @@ test('logro handles deprecated messages and levels', () => {
   const type = 'check';
   const guid = [123];
 
+  log.exception(err, msg, data, guid);
   log.message(msg, data, type, guid);
   log.error(err, msg, data, guid);
   log.warn(err, msg, guid);
@@ -51,6 +52,38 @@ test('logro handles deprecated messages and levels', () => {
       if (process.env.NODE_ENV !== 'test') {
         ok(stderr.includes('Error: FAILURE'));
       }
+    }
+  }
+});
+
+test('logro provides static methods as helpers', () => {
+  Logro.setForbiddenFields(['a', 'b', 'b']);
+  log.info('EXAMPLE', { a: 1, c: { b: 2 } });
+
+  Logro.logger('DONE');
+  Logro.inspect({ foo: 'bar' });
+
+  console.log(Logro.format(null, ['TEST']));
+
+  const fn = Logro.getExpressLogger();
+  const req = {
+    useragent: {},
+    headers: {},
+    connection: {},
+  };
+  const res = {};
+  const next = () => {};
+
+  fn(req, res, next);
+}, ({ stdout, stderr }) => {
+  if (process.env.REMOVE_LOG !== 'true') {
+    ok(stdout.includes('DONE'));
+    ok(stdout.includes('TEST'));
+
+    if (process.env.NODE_ENV !== 'production') {
+      ok(stderr.includes('{"c":{}}'));
+      ok(stderr.includes('"ip":null'));
+      ok(stderr.includes('"os":null'));
     }
   }
 });

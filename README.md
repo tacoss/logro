@@ -45,7 +45,7 @@ Loud methods:
 
 > Both methods always print to the stdout during development to help, the default level is `info`.
 
-Disabled if one or more conditions are true:
+Log levels are set as follows:
 
 - `process.env.NODE_ENV === 'production'` &mdash; set `error` level
 - `process.env.NODE_ENV === 'test'` &mdash; set `debug` level
@@ -53,7 +53,7 @@ Disabled if one or more conditions are true:
 
 ## Formatting
 
-Pipe your logs to `logrof` in order to give them some format, it will skip non JSON objects from the stream.
+Pipe your logs to `logrof` in order to give them some format, it will ignore non JSON objects from the stream.
 
 Recognized fields are: `ts`, `time`, `ns`, `name` and `level`.
 
@@ -65,3 +65,14 @@ Options:
 - `--no-color` &mdash; Disable colors on formatting from output
 
 > Otherwise, the default output is JSON, always.
+
+## Public API
+
+- `new Logro(name)` and `Logro.createLogger(name)` &mdash; Creates a new logro instance, `name` can be a filepath.
+- `Logro.setForbiddenFields(fromConfig)` &mdash; List of fields to be ignored from `data` objects; also `Logro.clean()` is affected by this.
+- `Logro.getExpressLogger()` &mdash; Returns a middleware function for easy logging, it also setup `req.log` as helper.
+- `Logro.getLogger(name)` &mdash; Returns a `bole` instance.
+- `Logro.format(message[, data[, now]])` &mdash; Returns the message formatted for CLI usage: `[timestamp] [message] (data is optional)`
+- `Logro.logger(message)` &mdash; Print formatted messages to the stdout.
+- `Logro.inspect(message)` &mdash; Print formatted messages to the stdout; ignored if `process.env.NODE_ENV === 'test'`
+- `Logro.clean(data[, fields])` &mdash; Safely clone and remove fields from any given object, it also removes those set by `setForbiddenFields()` calls.

@@ -31,7 +31,7 @@ process.stdin.pipe(new Transform({
         delete payload.ts;
         delete payload.ns;
 
-        const label = level.toUpperCase();
+        const label = typeof level === 'string' ? level.toUpperCase() : '';
         const prefix = level ? (!noColor ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
 
         buffer.push(`${format(prefix, payload, time ? new Date(time) : null)}\n`);

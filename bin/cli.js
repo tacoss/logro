@@ -10,7 +10,7 @@ process.stdin.pipe(new Transform({
     const lines = Buffer.from(entry, enc).toString().trim().split('\n');
     const buffer = [];
 
-    lines.map(x => x.trim()).forEach(line => {
+    lines.forEach(line => {
       if (line.charAt() === '{' && line.charAt(line.length - 1) === '}') {
         let payload;
 

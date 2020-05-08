@@ -24,14 +24,15 @@
   "author": "Alvaro Cabrera <pateketrueke@gmail.com> (https://soypache.co)",
   "license": "MIT",
   "dependencies": {
-    "bole": "^3.0.2",
+    "bole": "^4.0.0",
     "rfdc": "^1.1.4",
-    "uuid": "^3.3.2"
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "codecov": "^3.5.0",
     "lodash": ">=4.17.13",
-    "nyc": "^14.1.1",
+    "minimist": ">=0.2.1",
+    "nyc": "^15.0.1",
     "std-mocks": "^1.0.1"
   }
 }

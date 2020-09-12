@@ -1,7 +1,6 @@
 const debug = process.argv.indexOf('--debug') !== -1;
 
 const io = require('std-mocks');
-const a = require('assert');
 
 function test(text, cb, k) {
   console.log('*', text);

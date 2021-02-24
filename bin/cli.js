@@ -1,3 +1,4 @@
+const strip = require('strip-ansi');
 const { inspect } = require('util');
 const { Transform } = require('stream');
 const { format } = require('../lib/debug');
@@ -36,7 +37,11 @@ process.stdin.pipe(new Transform({
 
         buffer.push(`${format(prefix, payload, time ? new Date(time) : null)}\n`);
       } else if (!isQuiet) {
-        buffer.push(`${line}\n`);
+        const test = strip(line).trim().length;
+
+        if (test > 0) {
+          buffer.push(`${line}\n`);
+        }
       }
     });
 

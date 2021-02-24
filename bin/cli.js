@@ -55,7 +55,7 @@ process.stdin.pipe(new Transform({
 
         buffer.push(`${format(prefix, payload, time ? new Date(time) : null)}\n`);
       } else if (!isQuiet) {
-        const test = strip(line).trim().length;
+        const test = strip(line).replace(/^[ ]+|[ ]+$/g, '').length;
 
         if (test > 0) {
           buffer.push(`${line}\n`);

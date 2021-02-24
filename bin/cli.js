@@ -6,6 +6,12 @@ const { format } = require('../lib/debug');
 const isQuiet = process.argv.indexOf('--quiet') !== -1;
 const noColor = process.argv.indexOf('--no-color') !== -1;
 
+const omit = process.argv.indexOf('--omit') !== -1;
+const omitKeys = (omit && process.argv[process.argv.indexOf('--omit') + 1] || '').split(/[,;|]/);
+
+const only = process.argv.indexOf('--only') !== -1;
+const onlyKeys = (only && process.argv[process.argv.indexOf('--only') + 1] || '').split(/[,;|]/);
+
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
     const lines = Buffer.from(entry, enc).toString().trim().split('\n');
@@ -31,6 +37,18 @@ process.stdin.pipe(new Transform({
         delete payload.name;
         delete payload.ts;
         delete payload.ns;
+
+        if (only) {
+          Object.keys(payload).forEach(key => {
+            if (!onlyKeys.includes(key)) {
+              delete payload[key];
+            }
+          })
+        } else if (omit) {
+          omitKeys.forEach(key => {
+            delete payload[key];
+          });
+        }
 
         const label = typeof level === 'string' ? level.toUpperCase() : '';
         const prefix = level ? (!noColor ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;

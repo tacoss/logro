@@ -1,4 +1,4 @@
-# :tada: logro [![Build Status](https://api.travis-ci.org/tacoss/logro.svg?branch=master)](https://travis-ci.org/tacoss/logro) [![NPM version](https://badge.fury.io/js/logro.svg)](http://badge.fury.io/js/logro) [![Coverage Status](https://codecov.io/github/tacoss/logro/coverage.svg?branch=master)](https://codecov.io/github/tacoss/logro) [![Known Vulnerabilities](https://snyk.io/test/npm/logro/badge.svg)](https://snyk.io/test/npm/logro)
+# :tada: logro [![NPM version](https://badge.fury.io/js/logro.png)](http://badge.fury.io/js/logro) [![codecov](https://codecov.io/gh/tacoss/logro/branch/master/graph/badge.svg)](https://codecov.io/gh/tacoss/logro) [![Build status](https://github.com/tacoss/logro/workflows/build/badge.svg)](https://github.com/tacoss/logro/actions)
 
 > Handy logger impl.
 

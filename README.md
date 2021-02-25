@@ -1,4 +1,4 @@
-# :tada: logro [![NPM version](https://badge.fury.io/js/logro.png)](http://badge.fury.io/js/logro) [![codecov](https://codecov.io/gh/tacoss/logro/branch/master/graph/badge.svg)](https://codecov.io/gh/tacoss/logro) [![Build status](https://github.com/tacoss/logro/workflows/build/badge.svg)](https://github.com/tacoss/logro/actions)
+# :tada: logro [![NPM version](https://badge.fury.io/js/logro.svg)](http://badge.fury.io/js/logro) [![codecov](https://codecov.io/gh/tacoss/logro/branch/master/graph/badge.svg)](https://codecov.io/gh/tacoss/logro) [![Build status](https://github.com/tacoss/logro/workflows/build/badge.svg)](https://github.com/tacoss/logro/actions)
 
 > Handy logger impl.
 

@@ -14,17 +14,23 @@ const onlyKeys = (only && process.argv[process.argv.indexOf('--only') + 1] || ''
 
 process.stdin.pipe(new Transform({
   transform(entry, enc, callback) {
-    const lines = Buffer.from(entry, enc).toString().trim().split('\n');
+    if (entry.toString('utf8', 0, 1) !== '{') {
+      callback(null, entry);
+      return;
+    }
+
+    const content = Buffer.from(entry, enc).toString();
+    const lines = content.split('\n');
     const buffer = [];
 
-    lines.forEach(line => {
+    lines.forEach((line, i) => {
       if (line.charAt() === '{' && line.charAt(line.length - 1) === '}') {
         let payload;
 
         try {
           payload = JSON.parse(line);
         } catch (e) {
-          buffer.push(`${line}\n`);
+          buffer.push(line);
           return;
         }
 
@@ -53,16 +59,12 @@ process.stdin.pipe(new Transform({
         const label = typeof level === 'string' ? level.toUpperCase() : '';
         const prefix = level ? (!noColor ? `\u001b[4m${label}\u001b[24m ${name || ''}` : `${label} ${name || ''}`).trim() : name;
 
-        buffer.push(`${format(prefix, payload, time ? new Date(time) : null)}\n`);
+        buffer.push(format(prefix, payload, time ? new Date(time) : null));
       } else if (!isQuiet) {
-        const test = strip(line).replace(/^[ ]+|[ ]+$/g, '').length;
-
-        if (test > 0) {
-          buffer.push(`${line}\n`);
-        }
+        buffer.push(line);
       }
     });
 
-    callback(null, buffer.join(''));
+    callback(null, buffer.join('\n'));
   }
 })).pipe(process.stdout);

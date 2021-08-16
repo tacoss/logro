@@ -1,6 +1,6 @@
 {
   "name": "logro",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Handy logger impl.",
   "main": "lib/index.js",
   "bin": {
